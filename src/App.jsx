@@ -1,33 +1,106 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { db } from './firebase'
+import { collection, doc, getDocs, deleteDoc, addDoc, updateDoc, getDoc } from "firebase/firestore";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [tasks, setTasks] = useState([]);
+
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+
+  const fetchTasks = async () => {
+    const collectionRef = collection(db, 'tasks');
+    const querySnapshot = await getDocs(collectionRef);
+
+    const tasks = querySnapshot.docs.map((task) => ({
+      id: task.id,
+      ...task.data()
+    }))
+    setTasks(tasks)
+  }
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const deleteTask = async (id) => {
+
+    const docRef = doc(db, 'tasks', id)
+    await deleteDoc(docRef)
+
+    setTasks((prevTasks) => prevTasks.filter(task => task.id !== id))
+  }
+
+  const addTask = async (e) => {
+    e.preventDefault();
+    const collectionRef = collection(db, 'tasks');
+    await addDoc(collectionRef, {
+      title: title,
+      body: body,
+      status: 'pending'
+    })
+    setTitle('')
+    setBody('')
+    alert('Task added')
+  }
+
+  const handleStatus = async (id) => {
+    try {
+      const itemRef = doc(db, 'tasks', id);
+      const currentTask = await getDoc(itemRef);
+      const currentStatus = currentTask.data().status;
+      const newStatus = currentStatus === 'pending' ? 'completed' : 'pending';
+
+      await updateDoc(itemRef, {
+        status: newStatus,
+      });
+
+      setTasks((prevTasks) =>
+        prevTasks.map((task) =>
+          task.id === id ? { ...task, status: newStatus } : task
+        )
+      );
+    } catch (error) {
+      console.log(error)
+    }
+
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="formStyle">
+        <h3>ADD TASK</h3>
+        <form onSubmit={addTask}>
+          <input type="text" name="title" id="title" placeholder="title" value={title} required onChange={(e) => setTitle(e.target.value)} />
+          <textarea name="description" id="description" placeholder="description" value={body} required onChange={(e) => setBody(e.target.value)}></textarea>
+          <button type="submit" onClick={() => { setTimeout(() => { window.location.reload() }, 1500) }}>ADD</button>
+        </form>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      {
+        tasks.map((task) => (
+          <div key={task.id}>
+            <div>
+              Task title: {task.title}
+            </div>
+            <div>
+              Task body: {task.body}
+            </div>
+            <div>
+              Task status
+              <button onClick={() => {handleStatus(task.id)}}>
+                {task.status}
+              </button>
+            </div>
+            <button onClick={() => deleteTask(task.id)}>
+              Delete task
+            </button>
+          </div>
+
+        ))
+      }
     </>
   )
 }

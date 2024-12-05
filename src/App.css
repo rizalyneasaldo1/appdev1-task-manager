@@ -1,3 +1,7 @@
+body {
+  background-color: #E5E1DA;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -5,38 +9,60 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.formStyle {
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.formStyle {
+  background-color: #B3C8CF;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 100px 100px 100px 100px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 1000px;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.formStyle h3 {
+  margin-bottom: 20px;
+  color: #000000;
+  font-size: 25px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
-.card {
-  padding: 2em;
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  outline: none;
+  font-style: italic;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.read-the-docs {
-  color: #888;
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+button[type="submit"] {
+  background-color: #697565;
+  color: white;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 900;
+}
+
+button[type="submit"]:hover {
+  background-color: #3C3D37;
 }
