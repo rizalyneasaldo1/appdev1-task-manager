@@ -73,34 +73,38 @@ function App() {
       <div className="formStyle">
         <h3>ADD TASK</h3>
         <form onSubmit={addTask}>
-          <input type="text" name="title" id="title" placeholder="title" value={title} required onChange={(e) => setTitle(e.target.value)} />
-          <textarea name="description" id="description" placeholder="description" value={body} required onChange={(e) => setBody(e.target.value)}></textarea>
+          <input type="text" name="title" id="title" placeholder="Title" value={title} required onChange={(e) => setTitle(e.target.value)} />
+          <textarea name="description" id="description" placeholder="Description" value={body} required onChange={(e) => setBody(e.target.value)}></textarea>
           <button type="submit" onClick={() => { setTimeout(() => { window.location.reload() }, 1500) }}>ADD</button>
         </form>
       </div>
 
-      {
-        tasks.map((task) => (
-          <div key={task.id}>
-            <div>
-              Task title: {task.title}
-            </div>
-            <div>
-              Task body: {task.body}
-            </div>
-            <div>
-              Task status
-              <button onClick={() => {handleStatus(task.id)}}>
-                {task.status}
+        {
+          tasks.map((task) => (
+            <div key={task.id} className="displayContainer">
+              <h3><u>TASK</u></h3>
+              <div>
+                <b>Title : </b>{task.title}
+              </div>
+              <div>
+                <b>Description : </b>{task.body}
+              </div>
+              <div >
+                <b>Status : </b>
+                <button onClick={() => {handleStatus(task.id)}}>
+                  {task.status}
+                </button>
+              </div>
+              <br></br>
+              <button onClick={() => deleteTask(task.id)}>
+                Delete
               </button>
             </div>
-            <button onClick={() => deleteTask(task.id)}>
-              Delete task
-            </button>
-          </div>
 
-        ))
-      }
+          )) 
+        }
+      
+      
     </>
   )
 }

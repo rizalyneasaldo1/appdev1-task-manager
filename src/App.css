@@ -3,25 +3,22 @@ body {
 }
 
 #root {
+  display: flex;
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  justify-content: space-between;
 }
 
 .formStyle {
   display: flex;
   flex-direction: column;
-}
-
-.formStyle {
   background-color: #B3C8CF;
   border-radius: 10px;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-right: 20px; /* Space between form and task list */
   box-shadow: 100px 100px 100px 100px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 1000px;
+  width: 45%;
   text-align: center;
 }
 
@@ -66,3 +63,42 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #3C3D37;
 }
+
+.displayContainer {
+  width: 50%;
+  display: flex;
+  background-color: #ffffff; /* White background for task container */
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.displayContainer h3 {
+  color: #000000;
+  font-size: 22px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  margin-bottom: 15px;
+}
+
+.taskItem button {
+  background-color: #697565;
+  color: rgb(255, 0, 0);
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.taskItem button:hover {
+  background-color: #ffffff;
+}
+
